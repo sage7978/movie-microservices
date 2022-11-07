@@ -3,14 +3,13 @@ package com.satishpatra.moviecatalogservice.resources
 import com.satishpatra.moviecatalogservice.models.CatalogItem
 import com.satishpatra.moviecatalogservice.models.Movie
 import com.satishpatra.moviecatalogservice.models.Rating
-import org.springframework.boot.web.client.RestTemplateBuilder
-import org.springframework.context.annotation.Bean
+import com.satishpatra.moviecatalogservice.restTemplate
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.RestTemplate
-import java.time.Duration
 import java.util.*
 import java.util.stream.Collectors
 
@@ -18,10 +17,8 @@ import java.util.stream.Collectors
 @RequestMapping("/catalog")
 class MovieCatalogResource {
 
-    @Bean
-    fun restTemplate(): RestTemplate = RestTemplateBuilder()
-        .setConnectTimeout(Duration.ofSeconds(10))
-        .build()
+    @Autowired
+    lateinit var restTemplate: RestTemplate
 
     @GetMapping("/{userId}")
     fun getCatalog(@PathVariable userId: String): List<CatalogItem> {
